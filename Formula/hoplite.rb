@@ -14,9 +14,8 @@ class Hoplite < Formula
   depends_on "zlib"
 
   resource "hara" do
-    url "https://github.com/hara-lang/hara.git",
-        tag:      "v0.1.0",
-        revision: "5ae3449e461274323318ceb33131111c53210835"
+    url "https://github.com/hara-lang/hara/archive/refs/tags/v0.1.0.tar.gz"
+    sha256 "56b763d4c39d4e8ecfb0cb2eeca80fcebae1b3ab3a5299862c2619bc7bc5317f"
   end
 
   resource "nginx" do
