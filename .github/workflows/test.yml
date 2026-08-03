@@ -1,0 +1,58 @@
+name: Test formulae
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: homebrew-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  syntax:
+    name: Style and audit
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@1f8e202ffddf94def7f42f6fa3a482e821489f9c # 2026.07.10.1
+      - name: Install Homebrew developer gems
+        run: brew install-bundler-gems --groups=style,audit
+      - name: Check Ruby syntax
+        run: find Formula -name '*.rb' -print0 | xargs -0 -n1 ruby -c
+      - name: Check Homebrew style
+        run: brew style greenways-ai/tap
+      - name: Audit formulae
+        run: |
+          brew audit --strict greenways-ai/tap/hara
+          brew audit --strict greenways-ai/tap/hoplite
+
+  install:
+    name: ${{ matrix.formula }} on ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-15
+          - ubuntu-24.04
+        formula:
+          - hara
+          - hoplite
+    runs-on: ${{ matrix.os }}
+    env:
+      HOMEBREW_NO_INSTALL_FROM_API: "1"
+    steps:
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@1f8e202ffddf94def7f42f6fa3a482e821489f9c # 2026.07.10.1
+      - name: Build and install
+        run: brew install --build-from-source greenways-ai/tap/${{ matrix.formula }}
+      - name: Check linkage
+        run: brew linkage --test greenways-ai/tap/${{ matrix.formula }}
+      - name: Run formula test
+        run: brew test greenways-ai/tap/${{ matrix.formula }}
