@@ -34,6 +34,7 @@ class Hoplite < Formula
     end
 
     inreplace "Cargo.toml", "../hara.lang/rust", "hara.lang/rust"
+    inreplace "runtime/Cargo.toml", "../../hara.lang/rust", "../hara.lang/rust"
 
     openssl = Formula["openssl@3"]
     pcre2 = Formula["pcre2"]
