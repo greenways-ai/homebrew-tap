@@ -24,8 +24,9 @@ class Hoplite < Formula
   end
 
   def install
+    hara_source = buildpath.parent/"#{buildpath.basename}.hara"
     resource("hara").stage do
-      (buildpath/"hara.lang").install Pathname.pwd.children
+      hara_source.install Pathname.pwd.children
     end
 
     nginx_source = buildpath/"target/sources/nginx-1.30.4"
@@ -33,8 +34,9 @@ class Hoplite < Formula
       nginx_source.install Pathname.pwd.children
     end
 
-    inreplace "Cargo.toml", "../hara.lang/rust", "hara.lang/rust"
-    inreplace "runtime/Cargo.toml", "../../hara.lang/rust", "../hara.lang/rust"
+    hara_rust = (hara_source/"rust").to_s
+    inreplace "Cargo.toml", "../hara.lang/rust", hara_rust
+    inreplace "runtime/Cargo.toml", "../../hara.lang/rust", hara_rust
 
     openssl = Formula["openssl@3"]
     pcre2 = Formula["pcre2"]
