@@ -1,13 +1,12 @@
 # Greenways Homebrew Tap
 
-Official Homebrew formulae for tagged command-line tools in the Greenways and Hara open-source ecosystem. The formulae build from pinned source revisions so the same installation commands work on macOS and Linux.
+Official Homebrew formulae for tagged command-line tools in the Greenways open-source ecosystem. The formulae build from pinned source revisions so the same installation commands work on macOS and Linux.
 
 ## Install
 
 Use the fully qualified formula name. Homebrew adds the tap automatically and trusts only the selected formula:
 
 ```sh
-brew install greenways-ai/tap/hara
 brew install greenways-ai/tap/hoplite
 ```
 
@@ -15,33 +14,30 @@ The equivalent explicit tap flow is:
 
 ```sh
 brew tap greenways-ai/tap
-brew trust --formula greenways-ai/tap/hara
 brew trust --formula greenways-ai/tap/hoplite
-brew install hara hoplite
+brew install hoplite
 ```
 
 ## Formulae
 
 | Formula | Command | Description | Release |
 | --- | --- | --- | --- |
-| `hara` | `hara` | Symbolic language and portable AST kernel | `v0.1.0` |
 | `hoplite` | `hoplite` | Hara application server built into nginx | `v0.1.0` |
 
 ## Verify
 
 ```sh
-hara eval '(+ 19 23)'
 hoplite eval '(+ 19 23)'
 hoplite version
 ```
 
-Both evaluation commands should print `42`.
+The evaluation command should print `42`.
 
 ## Upgrade
 
 ```sh
 brew update
-brew upgrade greenways-ai/tap/hara greenways-ai/tap/hoplite
+brew upgrade greenways-ai/tap/hoplite
 ```
 
 ## Release policy

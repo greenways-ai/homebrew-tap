@@ -1,6 +1,6 @@
 # Contributing formulae
 
-This tap distributes installable Greenways and Hara command-line releases. It is not a mirror of every source repository.
+This tap distributes installable Greenways command-line releases. It is not a mirror of every source repository.
 
 ## Admission requirements
 
@@ -30,10 +30,7 @@ Release-producing repositories should update this tap as the final step after th
 ```sh
 brew tap greenways-ai/tap
 brew style greenways-ai/tap
-brew audit --strict greenways-ai/tap/hara
 brew audit --strict greenways-ai/tap/hoplite
-brew install --build-from-source greenways-ai/tap/hara
 brew install --build-from-source greenways-ai/tap/hoplite
-brew test greenways-ai/tap/hara
 brew test greenways-ai/tap/hoplite
 ```
